@@ -1,11 +1,34 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twitch/providers/userprovider.dart';
+import 'package:twitch/screens/homescreen.dart';
 import 'package:twitch/screens/onboarding.dart';
 import 'package:twitch/screens/signupscreen.dart';
 import 'package:twitch/utils/colors.dart';
 import 'package:twitch/screens/loginscreen.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyAgfFdvPOP5c6RVncV9V-jciCg0K8pKNO8',
+        appId: '1:913812268775:android:21b3fb41e3bf7387d5a442',
+        messagingSenderId: '913812268775',
+        projectId: 'twitch-clone-b1541',
+        storageBucket: 'twitch-clone-b1541.firebasestorage.app',
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_)=>UserProvider())
+  ],child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,6 +56,7 @@ class MyApp extends StatelessWidget {
         onBoardingScreen.routeName: (context)=>const onBoardingScreen(),
         loginScreen.routeName: (context)=>const loginScreen(),
         signUpScreen.routeName: (context)=> const signUpScreen(),
+        homeScreen.routeName: (context)=> const homeScreen()
     },
       home: onBoardingScreen(),
     );

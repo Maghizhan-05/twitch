@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:twitch/widgets/buttons.dart';
 import 'package:twitch/widgets/textfield.dart';
 
+import '../resources/auth_methods.dart';
+import 'homescreen.dart';
+
 class signUpScreen extends StatefulWidget {
   static const routeName = '/signup';
   const signUpScreen({super.key});
@@ -14,6 +17,16 @@ class _signUpScreenState extends State<signUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  final AuthMethods _authMethods = AuthMethods();
+
+  void signUpUser()async{
+    bool res = await _authMethods.signUpUser(context, _emailController.text, _usernameController.text, _passwordController.text);
+    if(res){
+      Navigator.pushNamed(context, homeScreen.routeName);
+    }
+  }
+
+
 
   Widget build(BuildContext context) {
     @override
@@ -57,7 +70,7 @@ class _signUpScreenState extends State<signUpScreen> {
                 child: customTextField(controller: _passwordController),
               ),
               const SizedBox(height: 20),
-              customButton(text: "Sign Up", onTap: (){}),
+              customButton(text: "Sign Up", onTap: signUpUser),
             ],
           ),
         ),
