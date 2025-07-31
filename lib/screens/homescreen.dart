@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/userprovider.dart';
 
 
 class homeScreen extends StatefulWidget {
@@ -12,6 +15,9 @@ class homeScreen extends StatefulWidget {
 class _homeScreenState extends State<homeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final userProvider = Provider.of<UserProvider>(context);
+    return Scaffold(
+      body: Center(child: Text(userProvider.user.username),),
+    );
   }
 }

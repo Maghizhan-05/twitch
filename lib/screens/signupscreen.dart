@@ -22,7 +22,7 @@ class _signUpScreenState extends State<signUpScreen> {
   void signUpUser()async{
     bool res = await _authMethods.signUpUser(context, _emailController.text, _usernameController.text, _passwordController.text);
     if(res){
-      Navigator.pushNamed(context, homeScreen.routeName);
+      Navigator.pushReplacementNamed(context, homeScreen.routeName);
     }
   }
 
